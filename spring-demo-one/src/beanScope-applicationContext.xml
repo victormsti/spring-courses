@@ -24,8 +24,8 @@
 
 	<bean id="myCoach"
 		class="com.luv2code.springdemo.TrackCoach"
-		init-method="doMyStartupStuff"
-		destroy-method="doMyCleanupStuff">
+		scope="prototype">
+		
 		<!-- Set up constructor injection -->
 		<constructor-arg ref="myFortuneService" />
 	</bean>
