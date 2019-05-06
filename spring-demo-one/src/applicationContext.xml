@@ -9,12 +9,29 @@
 
 
 	<!-- Define your beans here -->
+
+	<bean id="myLoggerConfig"
+		class="com.luv2code.springdemo.MyLoggerConfig"
+		init-method="initLogger">
+		<property name="rootLoggerLevel" value="FINE" />
+		<property name="printedLoggerLevel" value="FINE" />
+	</bean>
+
+	<!-- Define the dependency -->
+	<bean id="myFortuneService"
+		class="com.luv2code.springdemo.HappyFortuneService">
+	</bean>
+
+	<bean id="myCoach" class="com.luv2code.springdemo.TrackCoach">
+
+		<!-- Set up constructor injection -->
+		<constructor-arg ref="myFortuneService" />
+	</bean>
+
+	<bean id="myCricketCoach"
+		class="com.luv2code.springdemo.CricketCoach">
 	
-	<bean id="myLoggerConfig" class="com.luv2code.springdemo.MyLoggerConfig" init-method="initLogger">
-    	<property name="rootLoggerLevel" value="FINE" />
-    	<property name="printedLoggerLevel" value="FINE"/>
-    </bean>
-    
-	<bean id="myCoach" class="com.luv2code.springdemo.BaseballCoach"></bean>
-	
+	<!-- set up out setter injection -->
+	<property name="fortuneService" ref="myFortuneService"></property>
+	</bean>
 </beans>
