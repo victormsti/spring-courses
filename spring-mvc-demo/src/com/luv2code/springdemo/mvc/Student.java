@@ -2,6 +2,8 @@ package com.luv2code.springdemo.mvc;
 
 import java.util.LinkedHashMap;
 
+import com.luv2code.springdemo.mvc.validation.CourseCode;
+
 public class Student {
 
 	private String firstName; 
