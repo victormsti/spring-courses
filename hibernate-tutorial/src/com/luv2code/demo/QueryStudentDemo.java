@@ -1,5 +1,7 @@
 package com.luv2code.demo;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -21,25 +23,41 @@ public class QueryStudentDemo {
 		
 		// use the session object to save Java object
 		try {
-			// create a student object
-			System.out.println("Creating new student object...");
-			Student tempStudent = new Student("Victor", "Silva", "teste@teste.com");
-			
 			// start a transaction
 			session.beginTransaction();
 			
-			// save the student object
-			System.out.println("Saving the student...");
-			session.save(tempStudent);
+			// query students
+			List<Student> theStudents = session.createQuery("from Student").getResultList();
 			
-			// commit transaction
-			session.getTransaction().commit();
+			// display the students
+			displayStudents(theStudents);
+			
+			// query students: lastName = 'Silva'
+			theStudents = session.createQuery("from Student s where s.lastName = 'Silva'").getResultList();
+			System.out.println("\n\nStudents who have last name of Silva");
+			displayStudents(theStudents);
+			
+			// query students: lastName = 'Silva' OR firstName = 'João'
+			System.out.println("\n\nStudents who have last name of Silva or OR first name = João");
+			theStudents = session.createQuery("from Student s where s.lastName = 'Silva' OR s.firstName = 'João'").getResultList();
+			displayStudents(theStudents);
+
+			// query students: where email LIKE '%luv2code@test.com'
+			System.out.println("\n\nStudents who email LIKE '%luv2code@test.com\n");
+			theStudents = session.createQuery("from Student s where s.email LIKE '%luv2code@test.com'").getResultList();
+			displayStudents(theStudents);
 			
 			System.out.println("Done!");
 		}
 		
 		finally {
 			factory.close();
+		}
+	}
+
+	private static void displayStudents(List<Student> theStudents) {
+		for (Student student : theStudents) {
+			System.out.println(student);
 		}
 	}
 
