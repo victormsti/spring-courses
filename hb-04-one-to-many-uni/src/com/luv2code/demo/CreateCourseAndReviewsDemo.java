@@ -29,6 +29,16 @@ public class CreateCourseAndReviewsDemo {
 			// start a transaction
 			session.beginTransaction();
 			
+			Course tempCourse = new Course("Pacman");
+			
+			tempCourse.addReview(new Review("Great course!!"));
+			tempCourse.addReview(new Review("Good job!!"));
+			tempCourse.addReview(new Review("What a great course!!"));
+			
+			System.out.println("Saving the course");
+			System.out.println(tempCourse);
+			System.out.println(tempCourse.getReviews());
+			session.save(tempCourse);
 			
 			// commit transaction
 			session.getTransaction().commit();
@@ -37,8 +47,8 @@ public class CreateCourseAndReviewsDemo {
 		}
 		
 		finally {
-			
 			//add clean up code
+			
 			session.close();
 			factory.close();
 		}

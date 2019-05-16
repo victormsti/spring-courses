@@ -29,17 +29,14 @@ public class GetCourseAndReviewsDemo {
 			// start a transaction
 			session.beginTransaction();
 			
-			Course tempCourse = new Course("Pacman");
+			int theId = 10;
 			
-			tempCourse.addReview(new Review("Great course!!"));
-			tempCourse.addReview(new Review("Good job!!"));
-			tempCourse.addReview(new Review("What a great course!!"));
+			Course tempCourse = session.get(Course.class, theId);
 			
-			System.out.println("Saving the course");
-			System.out.println(tempCourse);
-			System.out.println(tempCourse.getReviews());
-			session.save(tempCourse);
 			
+			System.out.println("TEST 1: " + tempCourse);
+			
+			System.out.println("TEST 2: " + tempCourse.getReviews());
 			// commit transaction
 			session.getTransaction().commit();
 			
@@ -47,8 +44,8 @@ public class GetCourseAndReviewsDemo {
 		}
 		
 		finally {
-			//add clean up code
 			
+			//add clean up code
 			session.close();
 			factory.close();
 		}
