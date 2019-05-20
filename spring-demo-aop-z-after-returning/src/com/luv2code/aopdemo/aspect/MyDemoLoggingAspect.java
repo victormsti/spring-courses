@@ -17,10 +17,22 @@ import com.luv2code.aopdemo.Account;
 @Order(2)
 public class MyDemoLoggingAspect {
 
-	@AfterReturning(pointcut="com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..)",
+	@AfterReturning(pointcut="execution(* com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..))",
 			returning="result")
 	public void afterReturningfindAccountsAdvice(JoinPoint theJoinPoint, 
 			List<Account> result) {
+		
+		String method = theJoinPoint.getSignature().toShortString();
+		
+		System.out.println("\n====> Executing @AfterReturning on method: " + method);
+		
+		System.out.println("\n====> result is: " + result);
+
+		// convert the account names to uppercase
+		convertAccountNamesToUpperCase(result);
+		
+		System.out.println("\n====> result is: " + result);
+		
 		
 	}
 	
@@ -49,6 +61,14 @@ public class MyDemoLoggingAspect {
 				System.out.println("account name: " + theAccount.getName());
 				System.out.println("account level: " + theAccount.getLevel());
 			}
+		}
+	}
+	
+	private void convertAccountNamesToUpperCase(List<Account> result) {
+		
+		for (Account tempAccount : result) {
+			String theUpperName = tempAccount.getName().toUpperCase();
+			tempAccount.setName(theUpperName);
 		}
 	}
 	
