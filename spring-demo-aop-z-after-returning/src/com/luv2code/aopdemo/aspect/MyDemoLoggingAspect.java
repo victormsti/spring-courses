@@ -1,9 +1,11 @@
 package com.luv2code.aopdemo.aspect;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,13 @@ import com.luv2code.aopdemo.Account;
 @Order(2)
 public class MyDemoLoggingAspect {
 
+	@AfterReturning(pointcut="com.luv2code.aopdemo.dao.AccountDAO.findAccounts(..)",
+			returning="result")
+	public void afterReturningfindAccountsAdvice(JoinPoint theJoinPoint, 
+			List<Account> result) {
+		
+	}
+	
 	@Before("com.luv2code.aopdemo.aspect.LuvAopExpressions.forDaoPackageNoGetterSetter()")
 	public void beforeAddAccountAdvise(JoinPoint theJoinPoint) {
 		System.out.println("\n====>>> Executing @Before advise on method");
